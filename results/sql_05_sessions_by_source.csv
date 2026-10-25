@@ -1,0 +1,8 @@
+session_source,sessions,avg_events,p50_duration_s,estimate_start_rate,application_rate
+google,5475,3.0,49.0,0.4391,0.0409
+organic,3778,3.06,50.0,0.4436,0.0431
+direct,2480,2.92,165.0,0.238,0.2364
+facebook,2443,2.59,33.0,0.3741,0.0246
+partner_lender,1584,3.67,71.0,0.519,0.0847
+referral,1303,3.12,54.0,0.4651,0.0453
+lifecycle_email,745,2.33,63.0,0.0,0.0
