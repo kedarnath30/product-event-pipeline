@@ -1,0 +1,50 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        run: pip install -r requirements.txt ruff
+      - name: Lint
+        run: ruff check src tests airflow scripts --select E9,F63,F7,F82
+      - name: Unit tests
+        run: pytest -q tests
+      - name: End-to-end pipeline (generate -> ingest -> dbt build -> late data -> incremental dbt build -> DQ -> SQL -> figures)
+        run: python -m src.pipeline
+      - name: Summary
+        run: cat results/pipeline_run.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-results
+          path: |
+            results/
+            figures/
+
+  airflow-dag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Airflow (official constraints)
+        run: |
+          AIRFLOW_VERSION=2.10.4
+          PY=$(python -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
+          pip install "apache-airflow==${AIRFLOW_VERSION}" \
+            --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-${AIRFLOW_VERSION}/constraints-${PY}.txt"
+      - name: DAG import check
+        run: python scripts/check_dag.py
