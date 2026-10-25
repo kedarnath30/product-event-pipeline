@@ -1,0 +1,162 @@
+{
+  "started_at": "2026-10-25T08:12:52+00:00",
+  "cutover": "2026-09-29T00",
+  "stream_end": "2026-10-01T00:00:00",
+  "steps": {
+    "generate": {
+      "seconds": 4.7,
+      "cross_device": 383,
+      "drift_injected": 327,
+      "duplicates": 318,
+      "future_journey_steps_dropped": 729,
+      "in_flight_at_stream_end": 23,
+      "late_offline": 990,
+      "lost_in_outage": 420,
+      "malformed_bad_name": 39,
+      "malformed_bad_timestamp": 63,
+      "malformed_future_timestamp": 55,
+      "malformed_invalid_enum": 169,
+      "malformed_missing_required": 318,
+      "malformed_no_identity": 81,
+      "malformed_wrong_type": 19,
+      "messages_delivered": 54230,
+      "messages_generated": 55084,
+      "pii_injected": 3,
+      "visitors": 16173,
+      "files_written": 720
+    },
+    "ingest_until_cutover": {
+      "seconds": 23.7,
+      "batches": 672,
+      "messages": 49906,
+      "accepted": 49205,
+      "quarantined": 701,
+      "events_per_second": 2875.4
+    },
+    "dbt_build_initial": {
+      "exit_code": 0,
+      "seconds": 52.6,
+      "pipeline_as_of": "2026-09-29 00:00:00",
+      "models": 14,
+      "models_ok": 14,
+      "tests": 63,
+      "tests_pass": 63,
+      "tests_warn": 0,
+      "tests_fail": 0,
+      "unit_tests": 1,
+      "unit_tests_pass": 1,
+      "nodes": 78,
+      "nodes_ok": 78,
+      "failures": []
+    },
+    "ingest_remaining": {
+      "seconds": 4.3,
+      "batches": 48,
+      "messages": 4324,
+      "accepted": 4279,
+      "quarantined": 45,
+      "events_per_second": 1462.4
+    },
+    "dbt_build_incremental": {
+      "exit_code": 0,
+      "seconds": 10.6,
+      "pipeline_as_of": "2026-10-01 00:00:00",
+      "models": 14,
+      "models_ok": 14,
+      "tests": 63,
+      "tests_pass": 63,
+      "tests_warn": 0,
+      "tests_fail": 0,
+      "unit_tests": 1,
+      "unit_tests_pass": 1,
+      "nodes": 78,
+      "nodes_ok": 78,
+      "failures": [],
+      "staged_rows_before": 48921,
+      "staged_rows_appended": 4250,
+      "late_events_loaded_after_cutover": 24,
+      "late_events_appended_to_staging": 24
+    },
+    "dq_monitor": {
+      "seconds": 0.7,
+      "alerts": 11,
+      "alerts_by_severity": {
+        "warning": 7,
+        "critical": 4
+      }
+    },
+    "sql_analyses": {
+      "seconds": 0.4,
+      "01_funnel_by_device": 4,
+      "02_time_to_convert": 7,
+      "03_ios_release_impact": 30,
+      "04_arrival_lateness_by_sdk": 3,
+      "05_sessions_by_source": 7
+    },
+    "figures": {
+      "seconds": 0.7,
+      "figures": [
+        "01_funnel.png",
+        "02_dq_violation_trend.png",
+        "03_lateness_by_sdk.png"
+      ]
+    }
+  },
+  "headline": {
+    "raw_events": 53484,
+    "quarantined": 746,
+    "staged_events_deduped": 53171,
+    "users": 16010,
+    "sessions": 17808,
+    "funnel": [
+      {
+        "step_order": 1,
+        "step": "Estimate Started",
+        "users": 7011,
+        "conversion_from_start": 1.0
+      },
+      {
+        "step_order": 2,
+        "step": "Estimate Completed",
+        "users": 4544,
+        "conversion_from_start": 0.6481
+      },
+      {
+        "step_order": 3,
+        "step": "Account Created",
+        "users": 1970,
+        "conversion_from_start": 0.281
+      },
+      {
+        "step_order": 4,
+        "step": "Application Submitted",
+        "users": 1136,
+        "conversion_from_start": 0.162
+      },
+      {
+        "step_order": 5,
+        "step": "Documents Uploaded",
+        "users": 769,
+        "conversion_from_start": 0.1097
+      },
+      {
+        "step_order": 6,
+        "step": "Offer Viewed",
+        "users": 556,
+        "conversion_from_start": 0.0793
+      },
+      {
+        "step_order": 7,
+        "step": "Offer Accepted",
+        "users": 201,
+        "conversion_from_start": 0.0287
+      }
+    ],
+    "quarantine_rate": 0.0138,
+    "raw_duplicate_rate": 0.0059,
+    "late_over_1h_share": 0.0196,
+    "dq_alerts": 11
+  },
+  "total_seconds": 98.2,
+  "note": "All data is synthetic (seeded generator); numbers describe the simulation, not a real product."
+}
