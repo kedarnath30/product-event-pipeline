@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kedarnath30.github.io/product-event-pipeline/schemas/track/estimate_completed.json",
+  "title": "Estimate Completed",
+  "description": "Visitor finishes the calculator and sees an indicative offer range.",
+  "allOf": [
+    {
+      "$ref": "../common/envelope.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "event",
+    "properties"
+  ],
+  "properties": {
+    "type": {
+      "const": "track"
+    },
+    "event": {
+      "const": "Estimate Completed"
+    },
+    "properties": {
+      "type": "object",
+      "required": [
+        "estimated_home_value",
+        "mortgage_balance",
+        "equity_requested",
+        "property_type"
+      ],
+      "properties": {
+        "estimated_home_value": {
+          "type": "number",
+          "minimum": 0
+        },
+        "mortgage_balance": {
+          "type": "number",
+          "minimum": 0
+        },
+        "equity_requested": {
+          "type": "number",
+          "minimum": 0
+        },
+        "property_type": {
+          "enum": [
+            "single_family",
+            "condo",
+            "townhouse",
+            "multi_family"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
