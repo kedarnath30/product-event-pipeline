@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kedarnath30.github.io/product-event-pipeline/schemas/common/envelope.json",
+  "title": "Segment-spec common fields",
+  "description": "Fields every message carries (Segment Spec: Common Fields). One of anonymousId / userId is required.",
+  "type": "object",
+  "required": [
+    "messageId",
+    "type",
+    "timestamp",
+    "sentAt",
+    "context"
+  ],
+  "properties": {
+    "messageId": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "type": {
+      "enum": [
+        "track",
+        "identify",
+        "page"
+      ]
+    },
+    "anonymousId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 8
+    },
+    "userId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^usr_[0-9a-z]{10}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sentAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "event": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "properties": {
+      "type": "object"
+    },
+    "traits": {
+      "type": "object"
+    },
+    "context": {
+      "type": "object",
+      "required": [
+        "library",
+        "device"
+      ],
+      "properties": {
+        "library": {
+          "type": "object",
+          "required": [
+            "name",
+            "version"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "analytics.js",
+                "analytics-ios",
+                "analytics-android"
+              ]
+            },
+            "version": {
+              "type": "string",
+              "pattern": "^\\d+\\.\\d+\\.\\d+$"
+            }
+          }
+        },
+        "app": {
+          "type": "object",
+          "properties": {
+            "version": {
+              "type": "string"
+            }
+          }
+        },
+        "device": {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "enum": [
+                "desktop",
+                "ios",
+                "android",
+                "mobile_web"
+              ]
+            }
+          }
+        },
+        "campaign": {
+          "type": "object",
+          "properties": {
+            "source": {
+              "type": "string"
+            },
+            "medium": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
+          }
+        },
+        "page": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "referrer": {
+              "type": "string"
+            }
+          }
+        },
+        "userAgent": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "anyOf": [
+    {
+      "required": [
+        "anonymousId"
+      ],
+      "properties": {
+        "anonymousId": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "required": [
+        "userId"
+      ],
+      "properties": {
+        "userId": {
+          "type": "string"
+        }
+      }
+    }
+  ]
+}
