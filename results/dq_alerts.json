@@ -1,0 +1,193 @@
+{
+  "summary": {
+    "messages_received": 54230,
+    "accepted": 53484,
+    "quarantined": 746,
+    "quarantine_rate": 0.0138,
+    "warned_accepted": 325,
+    "raw_duplicate_rate": 0.0059,
+    "late_over_1h_share": 0.0196,
+    "completeness": {
+      "home_utm_coverage": 0.911,
+      "identify_coverage": 0.9914,
+      "key_null_rate": 0.0,
+      "equity_null_rate": 0.0
+    },
+    "violations_by_code": [
+      {
+        "code": "unexpected_property",
+        "severity": "warn",
+        "n": 329
+      },
+      {
+        "code": "missing_required",
+        "severity": "block",
+        "n": 203
+      },
+      {
+        "code": "invalid_enum",
+        "severity": "block",
+        "n": 170
+      },
+      {
+        "code": "wrong_type",
+        "severity": "block",
+        "n": 136
+      },
+      {
+        "code": "missing_identity",
+        "severity": "block",
+        "n": 82
+      },
+      {
+        "code": "invalid_timestamp",
+        "severity": "block",
+        "n": 63
+      },
+      {
+        "code": "future_timestamp",
+        "severity": "block",
+        "n": 55
+      },
+      {
+        "code": "naming_convention",
+        "severity": "block",
+        "n": 27
+      },
+      {
+        "code": "unplanned_event",
+        "severity": "block",
+        "n": 12
+      },
+      {
+        "code": "pii_detected",
+        "severity": "block",
+        "n": 3
+      }
+    ],
+    "alerts_by_check": {
+      "validity": 5,
+      "schema_drift": 4,
+      "volume": 1,
+      "privacy": 1
+    },
+    "alerts_by_severity": {
+      "warning": 7,
+      "critical": 4
+    },
+    "thresholds": {
+      "volume_pct": 0.2,
+      "hourly_drop": 0.5,
+      "block_warn": 0.02,
+      "block_crit": 0.05,
+      "segment_reject": 0.1,
+      "segment_min_n": 20,
+      "drift_min_n": 10,
+      "late_share": 0.1,
+      "dup_rate": 0.01,
+      "utm_min": 0.8,
+      "identify_min": 0.99
+    }
+  },
+  "alerts": [
+    {
+      "check": "validity",
+      "severity": "warning",
+      "when": "2026-09-20",
+      "metric": "daily_quarantine_rate",
+      "value": 0.0298,
+      "threshold": 0.02,
+      "message": "49 of 1,647 messages quarantined (2.98%)"
+    },
+    {
+      "check": "validity",
+      "severity": "warning",
+      "when": "2026-09-21",
+      "metric": "daily_quarantine_rate",
+      "value": 0.0236,
+      "threshold": 0.02,
+      "message": "48 of 2,038 messages quarantined (2.36%)"
+    },
+    {
+      "check": "validity",
+      "severity": "warning",
+      "when": "2026-09-22",
+      "metric": "daily_quarantine_rate",
+      "value": 0.0222,
+      "threshold": 0.02,
+      "message": "45 of 2,024 messages quarantined (2.22%)"
+    },
+    {
+      "check": "validity",
+      "severity": "warning",
+      "when": "2026-09-23",
+      "metric": "daily_quarantine_rate",
+      "value": 0.0237,
+      "threshold": 0.02,
+      "message": "44 of 1,856 messages quarantined (2.37%)"
+    },
+    {
+      "check": "volume",
+      "severity": "critical",
+      "when": "2026-09-17 14:00 to 21:00 UTC",
+      "metric": "hourly_analytics.js_drop_vs_same_hour_median",
+      "value": 0.887,
+      "threshold": 0.5,
+      "message": "analytics.js: volume down 89% for 7h (~453 events missing) - likely SDK/collector outage"
+    },
+    {
+      "check": "validity",
+      "severity": "critical",
+      "when": "2026-09-19 to 2026-09-24",
+      "metric": "rejection_rate[Estimate Completed @ 3.4.0]",
+      "value": 1.0,
+      "threshold": 0.1,
+      "message": "'Estimate Completed' from 3.4.0: 113 of 113 rejected across 6 day(s)"
+    },
+    {
+      "check": "schema_drift",
+      "severity": "critical",
+      "when": "2026-09-19 18:05",
+      "metric": "type_change[properties.equity_requested]",
+      "value": 113.0,
+      "threshold": 10,
+      "message": "'Estimate Completed' from 3.4.0: properties.equity_requested has the wrong type (113x, e.g. '100000' is not of type 'number')"
+    },
+    {
+      "check": "schema_drift",
+      "severity": "warning",
+      "when": "2026-09-19 18:05",
+      "metric": "unplanned_property[properties.credit_score_band]",
+      "value": 113.0,
+      "threshold": 10,
+      "message": "'Estimate Completed' from 3.4.0 sends unplanned 'properties.credit_score_band' (113x since 2026-09-19 18:05); add it to the tracking plan or fix the client"
+    },
+    {
+      "check": "schema_drift",
+      "severity": "warning",
+      "when": "2026-09-24 18:01",
+      "metric": "unplanned_property[properties.credit_score_band]",
+      "value": 216.0,
+      "threshold": 10,
+      "message": "'Estimate Completed' from 3.4.1 sends unplanned 'properties.credit_score_band' (216x since 2026-09-24 18:01); add it to the tracking plan or fix the client"
+    },
+    {
+      "check": "schema_drift",
+      "severity": "warning",
+      "when": "whole window",
+      "metric": "unplanned_event_names",
+      "value": 39.0,
+      "threshold": 3,
+      "message": "4 event names not in the tracking plan (quarantined): 'Submit Application Btn' (12x), 'clicked_offer' (11x), 'estimate_started' (9x), 'OfferViewed' (7x)"
+    },
+    {
+      "check": "privacy",
+      "severity": "critical",
+      "when": "2026-09-06 15:29",
+      "metric": "pii[traits.email]",
+      "value": 3.0,
+      "threshold": 0,
+      "message": "PII-like key 'traits.email' sent 3x; events quarantined, not loaded"
+    }
+  ]
+}
