@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kedarnath30.github.io/product-event-pipeline/schemas/track/offer_accepted.json",
+  "title": "Offer Accepted",
+  "description": "User accepts the offer (funnel goal).",
+  "allOf": [
+    {
+      "$ref": "../common/envelope.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "event",
+    "properties"
+  ],
+  "properties": {
+    "type": {
+      "const": "track"
+    },
+    "event": {
+      "const": "Offer Accepted"
+    },
+    "properties": {
+      "type": "object",
+      "required": [
+        "application_id",
+        "offer_amount"
+      ],
+      "properties": {
+        "application_id": {
+          "type": "string",
+          "pattern": "^app_[0-9a-z]{10}$"
+        },
+        "offer_amount": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
