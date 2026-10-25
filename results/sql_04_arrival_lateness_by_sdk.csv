@@ -1,0 +1,4 @@
+library_name,events,p50_seconds,p95_seconds,p99_hours,max_hours,share_over_1h
+analytics-ios,11362,16.0,5495.8,24.1,35.9,0.0534
+analytics-android,6430,17.0,5646.6,23.98,35.9,0.053
+analytics.js,35379,1.0,2.0,0.0,0.0,0.0
