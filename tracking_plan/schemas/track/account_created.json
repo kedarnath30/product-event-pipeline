@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kedarnath30.github.io/product-event-pipeline/schemas/track/account_created.json",
+  "title": "Account Created",
+  "description": "Visitor creates an account (identify is called right after with the new userId).",
+  "allOf": [
+    {
+      "$ref": "../common/envelope.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "event",
+    "properties"
+  ],
+  "properties": {
+    "type": {
+      "const": "track"
+    },
+    "event": {
+      "const": "Account Created"
+    },
+    "properties": {
+      "type": "object",
+      "required": [
+        "signup_method"
+      ],
+      "properties": {
+        "signup_method": {
+          "enum": [
+            "email",
+            "google",
+            "apple"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
