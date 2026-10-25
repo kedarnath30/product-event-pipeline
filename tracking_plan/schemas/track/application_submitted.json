@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kedarnath30.github.io/product-event-pipeline/schemas/track/application_submitted.json",
+  "title": "Application Submitted",
+  "description": "Signed-in user submits the full application.",
+  "allOf": [
+    {
+      "$ref": "../common/envelope.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "event",
+    "properties"
+  ],
+  "properties": {
+    "type": {
+      "const": "track"
+    },
+    "event": {
+      "const": "Application Submitted"
+    },
+    "properties": {
+      "type": "object",
+      "required": [
+        "application_id",
+        "equity_requested",
+        "product"
+      ],
+      "properties": {
+        "application_id": {
+          "type": "string",
+          "pattern": "^app_[0-9a-z]{10}$"
+        },
+        "equity_requested": {
+          "type": "number",
+          "minimum": 0
+        },
+        "product": {
+          "enum": [
+            "hei",
+            "heloc"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
