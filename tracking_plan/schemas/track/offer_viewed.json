@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kedarnath30.github.io/product-event-pipeline/schemas/track/offer_viewed.json",
+  "title": "Offer Viewed",
+  "description": "User opens the underwritten offer.",
+  "allOf": [
+    {
+      "$ref": "../common/envelope.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "event",
+    "properties"
+  ],
+  "properties": {
+    "type": {
+      "const": "track"
+    },
+    "event": {
+      "const": "Offer Viewed"
+    },
+    "properties": {
+      "type": "object",
+      "required": [
+        "application_id",
+        "offer_amount",
+        "investment_percentage"
+      ],
+      "properties": {
+        "application_id": {
+          "type": "string",
+          "pattern": "^app_[0-9a-z]{10}$"
+        },
+        "offer_amount": {
+          "type": "number",
+          "minimum": 0
+        },
+        "investment_percentage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 30
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
