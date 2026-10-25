@@ -9,6 +9,6 @@ bag = DagBag(dag_folder=str(dags), include_examples=False)
 if bag.import_errors:
     print(bag.import_errors)
     sys.exit(1)
-dag = bag.get_dag("product_event_pipeline")
+dag = bag.dags.get("product_event_pipeline")  # no metadata DB needed
 assert dag is not None, "DAG not found"
 print("tasks:", [t.task_id for t in dag.tasks])
