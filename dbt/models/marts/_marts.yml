@@ -1,0 +1,81 @@
+version: 2
+
+models:
+  - name: dim_users
+    description: One row per person, with first-touch attribution and identify traits.
+    columns:
+      - name: person_id
+        data_tests: [unique, not_null]
+      - name: first_touch_source
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["google", "organic", "facebook", "partner_lender", "referral", "direct", "lifecycle_email"]
+      - name: first_device_type
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["desktop", "mobile_web", "ios", "android"]
+
+  - name: fct_sessions
+    description: One row per session.
+    columns:
+      - name: session_id
+        data_tests: [unique, not_null]
+      - name: person_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_users')
+                field: person_id
+      - name: duration_seconds
+        data_tests: [not_null]
+
+  - name: fct_funnel_steps
+    description: One row per person per funnel step reached (strict order).
+    columns:
+      - name: funnel_step_id
+        data_tests: [unique, not_null]
+      - name: person_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_users')
+                field: person_id
+      - name: step_name
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["Estimate Started", "Estimate Completed", "Account Created", "Application Submitted",
+                         "Documents Uploaded", "Offer Viewed", "Offer Accepted"]
+      - name: step_order
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [1, 2, 3, 4, 5, 6, 7]
+                quote: false
+
+  - name: mart_funnel_conversion
+    description: Step counts and conversion by first-touch source (segment = 'all' for overall).
+    columns:
+      - name: funnel_row_id
+        data_tests: [unique, not_null]
+      - name: users
+        data_tests: [not_null]
+
+  - name: fct_daily_active_users
+    description: DAU, rolling WAU (7d) and MAU (28d), new users.
+    columns:
+      - name: activity_date
+        data_tests: [unique, not_null]
+      - name: dau
+        data_tests: [not_null]
+
+  - name: fct_daily_conversion
+    description: Conversion by funnel-entry cohort day; is_mature flags cohorts old enough to read.
+    columns:
+      - name: cohort_date
+        data_tests: [unique, not_null]
