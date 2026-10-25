@@ -1,0 +1,5 @@
+device,estimate_started,applications,documents_uploaded,offers_accepted,application_to_docs_rate,start_to_accept_rate
+desktop,3198,606,436,120,0.7195,0.0375
+ios,1482,273,189,55,0.6923,0.0371
+android,831,105,70,13,0.6667,0.0156
+mobile_web,1500,152,74,13,0.4868,0.0087
