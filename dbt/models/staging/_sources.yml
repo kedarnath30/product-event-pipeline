@@ -1,0 +1,20 @@
+version: 2
+
+sources:
+  - name: segment
+    description: Raw layer written by src/ingester.py (micro-batches from the landing queue).
+    schema: raw
+    tables:
+      - name: events
+        description: Messages that passed the tracking-plan validator (at-least-once; may contain SDK-retry duplicates).
+        columns:
+          - name: message_id
+            data_tests: [not_null]
+          - name: received_at
+            data_tests: [not_null]
+      - name: events_quarantine
+        description: Messages rejected by the validator, with violation codes.
+      - name: schema_violations
+        description: One row per validator violation (block + warn).
+      - name: ingest_batches
+        description: Per-micro-batch ingest metrics.
