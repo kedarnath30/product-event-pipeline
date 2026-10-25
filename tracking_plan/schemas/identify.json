@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kedarnath30.github.io/product-event-pipeline/schemas/identify.json",
+  "title": "identify",
+  "description": "Ties anonymousId to userId. Traits are coarse and PII-free by design (no email, phone, name, SSN).",
+  "allOf": [
+    {
+      "$ref": "common/envelope.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "userId",
+    "traits"
+  ],
+  "properties": {
+    "type": {
+      "const": "identify"
+    },
+    "userId": {
+      "type": "string"
+    },
+    "traits": {
+      "type": "object",
+      "required": [
+        "created_at",
+        "state"
+      ],
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "state": {
+          "enum": [
+            "AZ",
+            "CA",
+            "CO",
+            "FL",
+            "GA",
+            "IL",
+            "MA",
+            "MI",
+            "NC",
+            "NJ",
+            "NY",
+            "OR",
+            "PA",
+            "TX",
+            "VA",
+            "WA"
+          ]
+        },
+        "home_value_band": {
+          "enum": [
+            "<300k",
+            "300-500k",
+            "500-800k",
+            "800k+"
+          ]
+        },
+        "signup_method": {
+          "enum": [
+            "email",
+            "google",
+            "apple"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
