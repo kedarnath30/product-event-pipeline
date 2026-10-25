@@ -1,0 +1,74 @@
+version: 2
+
+models:
+  - name: stg_segment__events
+    description: One row per Segment message, de-duplicated on message_id (incremental on loaded_at).
+    columns:
+      - name: message_id
+        data_tests: [unique, not_null]
+      - name: message_type
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["track", "identify", "page"]
+      - name: event_ts
+        data_tests:
+          - not_null
+          - recency_within:
+              arguments:
+                max_lag_hours: 3
+      - name: received_at
+        data_tests:
+          - not_null
+          - recency_within:
+              arguments:
+                max_lag_hours: 1
+          - daily_volume_within_bounds:
+              arguments:
+                min_rows_per_day: 500
+                max_pct_change: 0.5
+      - name: arrival_lag_seconds
+        description: receivedAt - timestamp. Large values are late (offline-buffered) events.
+        data_tests: [not_null]
+      - name: device_type
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["desktop", "mobile_web", "ios", "android"]
+
+  - name: stg_segment__tracks
+    description: track calls with typed tracking-plan properties.
+    columns:
+      - name: message_id
+        data_tests:
+          - unique
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_segment__events')
+                field: message_id
+      - name: event_name
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["Estimate Started", "Estimate Completed", "Account Created", "Application Submitted",
+                         "Documents Uploaded", "Offer Viewed", "Offer Accepted"]
+
+  - name: stg_segment__identifies
+    columns:
+      - name: message_id
+        data_tests: [unique, not_null]
+      - name: user_id
+        data_tests: [not_null]
+
+  - name: stg_segment__pages
+    columns:
+      - name: message_id
+        data_tests: [unique, not_null]
+      - name: page_name
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["Home", "How It Works", "Estimate", "Sign Up", "Application", "Documents", "Offer", "Dashboard"]
