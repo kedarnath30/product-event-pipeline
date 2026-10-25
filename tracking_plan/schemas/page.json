@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kedarnath30.github.io/product-event-pipeline/schemas/page.json",
+  "title": "page",
+  "description": "Page / screen view.",
+  "allOf": [
+    {
+      "$ref": "common/envelope.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "name",
+    "properties"
+  ],
+  "properties": {
+    "type": {
+      "const": "page"
+    },
+    "name": {
+      "enum": [
+        "Home",
+        "How It Works",
+        "Estimate",
+        "Sign Up",
+        "Application",
+        "Documents",
+        "Offer",
+        "Dashboard"
+      ]
+    },
+    "properties": {
+      "type": "object",
+      "required": [
+        "path"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^/"
+        },
+        "title": {
+          "type": "string"
+        },
+        "referrer": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
