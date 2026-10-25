@@ -1,0 +1,13 @@
+data/landing/
+warehouse/
+dbt/target/
+dbt/logs/
+dbt/.user.yml
+dbt/dbt_packages/
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+*.duckdb
+*.duckdb.wal
+.ruff_cache/
