@@ -1,0 +1,50 @@
+version: 2
+
+models:
+  - name: int_identity_map
+    description: anonymous_id -> user_id stitching (first user seen on a device wins).
+    columns:
+      - name: anonymous_id
+        data_tests: [unique, not_null]
+      - name: user_id
+        data_tests: [not_null]
+
+  - name: int_events_resolved
+    description: Every message with a resolved person_id (user_id if known, else anonymous_id).
+    columns:
+      - name: message_id
+        data_tests: [unique, not_null]
+      - name: person_id
+        data_tests: [not_null]
+
+  - name: int_sessionized
+    description: Messages assigned to 30-minute-inactivity sessions per person.
+    columns:
+      - name: message_id
+        data_tests: [unique, not_null]
+      - name: session_id
+        data_tests: [not_null]
+
+  - name: int_funnel_wide
+    description: One row per person who started an estimate; first time each step was reached in strict order.
+    columns:
+      - name: person_id
+        data_tests: [unique, not_null]
+
+unit_tests:
+  - name: test_sessionization_splits_on_30_minute_gap
+    description: A 29-minute gap stays in the session; a 31-minute gap starts a new one; people are independent.
+    model: int_sessionized
+    given:
+      - input: ref('int_events_resolved')
+        rows:
+          - {message_id: m1, person_id: p1, event_ts: "2026-09-01 10:00:00", message_type: page}
+          - {message_id: m2, person_id: p1, event_ts: "2026-09-01 10:29:00", message_type: track}
+          - {message_id: m3, person_id: p1, event_ts: "2026-09-01 11:00:01", message_type: page}
+          - {message_id: m4, person_id: p2, event_ts: "2026-09-01 10:10:00", message_type: page}
+    expect:
+      rows:
+        - {message_id: m1, session_number: 1, is_new_session: 1}
+        - {message_id: m2, session_number: 1, is_new_session: 0}
+        - {message_id: m3, session_number: 2, is_new_session: 1}
+        - {message_id: m4, session_number: 1, is_new_session: 1}
