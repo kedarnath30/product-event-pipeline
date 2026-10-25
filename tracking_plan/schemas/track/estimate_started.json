@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kedarnath30.github.io/product-event-pipeline/schemas/track/estimate_started.json",
+  "title": "Estimate Started",
+  "description": "Visitor starts the home-equity estimate calculator.",
+  "allOf": [
+    {
+      "$ref": "../common/envelope.json"
+    }
+  ],
+  "type": "object",
+  "required": [
+    "event",
+    "properties"
+  ],
+  "properties": {
+    "type": {
+      "const": "track"
+    },
+    "event": {
+      "const": "Estimate Started"
+    },
+    "properties": {
+      "type": "object",
+      "required": [
+        "property_state",
+        "entry_point"
+      ],
+      "properties": {
+        "property_state": {
+          "enum": [
+            "AZ",
+            "CA",
+            "CO",
+            "FL",
+            "GA",
+            "IL",
+            "MA",
+            "MI",
+            "NC",
+            "NJ",
+            "NY",
+            "OR",
+            "PA",
+            "TX",
+            "VA",
+            "WA"
+          ]
+        },
+        "entry_point": {
+          "enum": [
+            "hero_cta",
+            "nav",
+            "blog",
+            "partner_widget"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
